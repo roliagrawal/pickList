@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import Picklist from './component/PickList/PickList.js';
 import './App.css';
 const options = [
@@ -19,6 +18,8 @@ class App extends Component {
           options={options}
           radioOptions={radioOptions}
           defaultRadioSelectedOption="And"
+          onSelect={(selectedValues, selectedRadioOption) => {
+            console.log('selected values', selectedValues, 'selectedOprator', selectedRadioOption)}}
         />
       </div>
     );

@@ -29,7 +29,7 @@ const propTypes = {
    * The array of items fot checkbox
    */
   options: PropTypes.array,
-  defaultRadioSelectedOption: PropTypes.string.required,
+  defaultRadioSelectedOption: PropTypes.string.isRequired,
 };
 
 const defaultProps = {
@@ -50,11 +50,13 @@ class Picklist extends Component {
       selectedRadioOption: this.props.defaultRadioSelectedOption,
     };
   }
+  
   handleClickOutside = () => {
     this.setState({
       isMenuOpen: false,
     })
   }
+
   handlePickListClick = () => {
     let { isMenuOpen } = this.state;
     isMenuOpen = !isMenuOpen;
@@ -62,8 +64,9 @@ class Picklist extends Component {
       isMenuOpen: isMenuOpen,
     })
   }
+
   handleSelectedOptions = (value, isChecked) => {
-    let { selectedOptions } = this.state;
+    let { selectedOptions, selectedRadioOption } = this.state;
     if (isChecked && value) {
       selectedOptions = selectedOptions.concat(value);
     }
@@ -73,7 +76,9 @@ class Picklist extends Component {
     this.setState({
       selectedOptions: selectedOptions,
     })
+    this.props.onSelect(selectedOptions, selectedRadioOption);
   }
+
   handleDisplaySelectedValues = () => {
     let { selectedOptions } = this.state;
     const displayField = (selectedOptions.length > 1) ?
@@ -81,17 +86,23 @@ class Picklist extends Component {
     (`${selectedOptions[0]}`);
     return (selectedOptions.length ? displayField : 'Select');
   }
+
   handleSelectedClear = () => {
     this.setState({
       selectedOptions: [],
       selectedRadioOption: this.props.defaultRadioSelectedOption,
     })
+    this.props.onSelect([], this.props.defaultRadioSelectedOption);
   }
+
   handleRadioSelect = (value) => {
+    let { selectedOptions } = this.state;
     this.setState({
       selectedRadioOption: value,
     })
+    this.props.onSelect(selectedOptions, value);
   }
+
   render () {
     const {radioOptions, options}= this.props;
     return (

@@ -2,6 +2,31 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import './PickList.scss';
 
+const propTypes = {
+  /**
+   * Children provided to the component
+   */
+  children: PropTypes.node,
+  /**
+   * classname
+   */
+  className: PropTypes.string,
+  /**
+   * Passing the Menu Item click to the children
+   */
+  onRadioSelect: PropTypes.func,
+  /**
+   * value of radio option
+   */
+  value: PropTypes.string.isRequired,
+  checkedValue: PropTypes.string.isRequired,
+};
+
+const defaultProps = {
+  children: undefined,
+  className: '',
+  onRadioSelect: null,
+};
 class RadioBox extends Component {
   constructor(props) {
     super(props);
@@ -19,7 +44,7 @@ class RadioBox extends Component {
     this.props.onRadioSelect(this.props.value);
   }
   render() {
-    const { value, onSelect, children } = this.props
+    const { value, children } = this.props
     return (
       <div className="radioboxes" value={value}>
         <input
@@ -36,4 +61,6 @@ class RadioBox extends Component {
   }
 }
 
+RadioBox.defaultProps = defaultProps;
+RadioBox.propTypes = propTypes;
 export default RadioBox;

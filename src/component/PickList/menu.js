@@ -18,22 +18,24 @@ const propTypes = {
    */
   options: PropTypes.array,
   radioOptions: PropTypes.array,
+  isOpen: PropTypes.bool,
+  selectedRadioOption: PropTypes.string.isRequired,
 };
 
 const defaultProps = {
-  children: undefined,
   className: '',
+  isOpen: false,
   options: [],
   radioOptions: [],
 };
 
 const Menu = (props) =>  {
-  const { value, isOpen, children, options,  selectedOptions, radioOptions, selectedRadioOption } = props;
+  const { isOpen, options,  selectedOptions, radioOptions, selectedRadioOption } = props;
   const handleSelectedOptions = (selectedValue, isChecked) => {
     props.handleSelectedOptions(selectedValue, isChecked);
   }
   const handleIsChecked = (optionValue) => {
-    if(!selectedOptions.length || selectedOptions.indexOf(optionValue) == -1) {
+    if(!selectedOptions.length || selectedOptions.indexOf(optionValue) === -1) {
       return false;
     }
     return true;

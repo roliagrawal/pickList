@@ -2,6 +2,32 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import './PickList.scss';
 
+const propTypes = {
+  /**
+   * Children provided to the component
+   */
+  children: PropTypes.node,
+  /**
+   * classname
+   */
+  className: PropTypes.string,
+  /**
+   * Passing the Menu Item click to the children
+   */
+  onSelect: PropTypes.func,
+  /**
+   * value of radio option
+   */
+  value: PropTypes.string.isRequired,
+  isChecked: PropTypes.bool,
+};
+
+const defaultProps = {
+  children: undefined,
+  className: '',
+  onSelect: null,
+};
+
 class CheckboxOption extends Component {
   constructor(props) {
     super(props);
@@ -9,9 +35,11 @@ class CheckboxOption extends Component {
       isChecked: this.props.isChecked,
     };
   }
+  
   componentWillReceiveProps(props) {
     this.setState({isChecked: props.isChecked })
   }
+
   handleOnClick = (e) => {
     let { isChecked } = this.state;
     isChecked = !isChecked;
@@ -20,8 +48,9 @@ class CheckboxOption extends Component {
     })
     this.props.onSelect(this.props.value, isChecked);
   }
+
   render() {
-    const { value, onSelect, children } = this.props
+    const { value, children } = this.props
     return (
       <div className="checkboxes" value={value}>
         <input
@@ -38,4 +67,6 @@ class CheckboxOption extends Component {
   }
 }
 
+CheckboxOption.defaultProps = defaultProps;
+CheckboxOption.propTypes = propTypes;
 export default CheckboxOption;
